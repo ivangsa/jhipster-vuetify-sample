@@ -23,6 +23,8 @@ import AlertService from '@/shared/alert/alert.service';
 import TranslationService from '@/locale/translation.service';
 import ConfigurationService from '@/admin/configuration/configuration.service';
 
+import PostService from '@/entities/post/post.service';
+import TagService from '@/entities/tag/tag.service';
 // jhipster-needle-add-entity-service-to-main-import - JHipster will import entities services here
 
 Vue.config.productionTip = false;
@@ -69,6 +71,8 @@ router.beforeEach((to, from, next) => {
   }
 });
 
+const postService = new PostService();
+const tagService = new TagService();
 // jhipster-needle-add-entity-service-to-main-declaration - JHipster will declare entities services here
 
 /* tslint:disable */
@@ -91,8 +95,10 @@ new Vue({
     metricsService: () => metricsService,
     alertService: () => alertService,
     translationService: () => translationService,
-    accountService: () => accountService
+    accountService: () => accountService,
 
+    postService: () => postService,
+    tagService: () => tagService
     // jhipster-needle-add-entity-service-to-main - JHipster will import entities services here
   },
   i18n,

@@ -23,6 +23,18 @@ const JhiLogsComponent = () => import('../admin/logs/logs.vue');
 const JhiAuditsComponent = () => import('../admin/audits/audits.vue');
 const JhiMetricsComponent = () => import('../admin/metrics/metrics.vue');
 /* tslint:disable */
+// prettier-ignore
+const Post = () => import('../entities/post/post.vue');
+// prettier-ignore
+const PostUpdate = () => import('../entities/post/post-update.vue');
+// prettier-ignore
+const PostDetails = () => import('../entities/post/post-details.vue');
+// prettier-ignore
+const Tag = () => import('../entities/tag/tag.vue');
+// prettier-ignore
+const TagUpdate = () => import('../entities/tag/tag-update.vue');
+// prettier-ignore
+const TagDetails = () => import('../entities/tag/tag-details.vue');
 // jhipster-needle-add-entity-to-router-import - JHipster will import entities to the router here
 
 Vue.use(Router);
@@ -135,6 +147,16 @@ export default new Router({
       component: JhiConfigurationComponent,
       meta: { authorities: ['ROLE_ADMIN'] }
     }
+    ,
+  { path: '/entity/post', name: 'Post', component: Post, meta: { authorities: ['ROLE_USER'] } },
+  { path: '/entity/post/new', name: 'PostCreate', component: PostUpdate, meta: { authorities: ['ROLE_USER'] } },
+  { path: '/entity/post/:postId/edit', name: 'PostEdit', component: PostUpdate, meta: { authorities: ['ROLE_USER'] } },
+  { path: '/entity/post/:postId/view', name: 'PostView', component: PostDetails, meta: { authorities: ['ROLE_USER'] } }
+    ,
+  { path: '/entity/tag', name: 'Tag', component: Tag, meta: { authorities: ['ROLE_USER'] } },
+  { path: '/entity/tag/new', name: 'TagCreate', component: TagUpdate, meta: { authorities: ['ROLE_USER'] } },
+  { path: '/entity/tag/:tagId/edit', name: 'TagEdit', component: TagUpdate, meta: { authorities: ['ROLE_USER'] } },
+  { path: '/entity/tag/:tagId/view', name: 'TagView', component: TagDetails, meta: { authorities: ['ROLE_USER'] } }
     // jhipster-needle-add-entity-to-router - JHipster will add entities to the router here
   ]
 });

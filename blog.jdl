@@ -1,0 +1,12 @@
+entity Post {
+  name String required
+}
+entity Tag {
+  name String required
+}
+relationship ManyToMany {
+  Post{tag(name)} to Tag{post}
+}
+
+paginate Post, Tag with pagination
+
