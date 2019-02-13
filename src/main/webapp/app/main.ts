@@ -6,6 +6,7 @@ import App from './app.vue';
 import router from './router';
 import * as config from './shared/config/config';
 import * as bootstrapVueConfig from './shared/config/config-bootstrap-vue';
+import * as vuetifyConfig from './shared/config/config-vuetify';
 import JhiItemCountComponent from './shared/jhi-item-count.vue';
 import AuditsService from './admin/audits/audits.service';
 import HealthService from './admin/health/health.service';
@@ -37,6 +38,7 @@ const translationService = new TranslationService(store, i18n);
 config.initVueApp(Vue);
 config.initFortAwesome(Vue);
 bootstrapVueConfig.initBootstrapVue(Vue);
+vuetifyConfig.initVuetify(Vue);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('jhi-item-count', JhiItemCountComponent);
 

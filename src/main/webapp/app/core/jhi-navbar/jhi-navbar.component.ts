@@ -36,6 +36,10 @@ export default class JhiNavbar extends Vue {
     return false;
   }
 
+  public toogleDrawer(): void {
+    this.isNavbarCollapsed = !this.isNavbarCollapsed;
+  }
+
   public collapseNavbar(): void {
     this.isNavbarCollapsed = true;
   }
