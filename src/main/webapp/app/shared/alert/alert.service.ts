@@ -9,6 +9,7 @@ export default class JhiAlertService {
   }
 
   public showAlert(alertMessage: any, alertType = 'info') {
+    alertType = alertType === 'danger' ? 'error' : alertType;
     this.store.commit('setAlertType', alertType);
     this.store.commit('setAlertMessage', alertMessage);
   }

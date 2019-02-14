@@ -1,6 +1,7 @@
 import { Component, Vue, Inject } from 'vue-property-decorator';
 
 import { numeric, required, minLength, maxLength } from 'vuelidate/lib/validators';
+import VuelidateVuetifyMixin from '@/shared/validation/vuelidate-vuetify.mixin';
 
 import PostService from '../post/post.service';
 import { IPost } from '@/shared/model/post.model';
@@ -12,13 +13,16 @@ import TagService from './tag.service';
 const validations: any = {
   tag: {
     name: {
-      required
+      required,
+      minLength: minLength(3),
+      maxLength: maxLength(254)
     }
   }
 };
 
 @Component({
-  validations
+  validations,
+  mixins: [VuelidateVuetifyMixin]
 })
 export default class TagUpdate extends Vue {
   @Inject('alertService')

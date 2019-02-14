@@ -24,11 +24,11 @@
         </v-list-tile>
 
         <v-list-tile @click="$router.push({name: 'Post'})">
-          <v-list-tile-action><v-icon>navigate_next</v-icon></v-list-tile-action>
+          <v-list-tile-action><font-awesome-icon icon="asterisk" /></v-list-tile-action>
           <v-list-tile-title v-text="$t('global.menu.entities.post')">Post</v-list-tile-title>
         </v-list-tile>
         <v-list-tile @click="$router.push({name: 'Tag'})">
-          <v-list-tile-action><v-icon>navigate_next</v-icon></v-list-tile-action>
+          <v-list-tile-action><font-awesome-icon icon="asterisk" /></v-list-tile-action>
           <v-list-tile-title v-text="$t('global.menu.entities.tag')">Tag</v-list-tile-title>
         </v-list-tile>
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->        
