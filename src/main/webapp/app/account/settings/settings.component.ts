@@ -1,4 +1,5 @@
 import { email, maxLength, minLength, required } from 'vuelidate/lib/validators';
+import VuelidateVuetifyMixin from '@/shared/validation/vuelidate-vuetify.mixin';
 import axios from 'axios';
 import { EMAIL_ALREADY_USED_TYPE } from '@/constants';
 import { Vue, Component, Inject } from 'vue-property-decorator';
@@ -25,7 +26,8 @@ const validations = {
 };
 
 @Component({
-  validations
+  validations,
+  mixins: [VuelidateVuetifyMixin]
 })
 export default class Settings extends Vue {
   public success: string = null;
