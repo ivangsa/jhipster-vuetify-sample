@@ -12,7 +12,7 @@ export default class Post extends Vue {
   @Inject('postService')
   private postService: () => PostService;
   private removeId: string = null;
-  public itemsPerPage = 20;
+  public itemsPerPage = 10;
   public queryCount: number = null;
   public page = 1;
   public previousPage: number = null;
@@ -62,6 +62,30 @@ export default class Post extends Vue {
       });
   }
 
+  public get pagination(): any {
+    const pagination = {
+      descending: this.reverse,
+      page: this.page,
+      rowsPerPage: this.itemsPerPage,
+      sortBy: this.propOrder,
+      totalItems: this.totalItems
+    };
+    console.log('get pagination', pagination);
+    return pagination;
+  }
+
+  public set pagination(pagination: any) {
+    console.log('set pagination', pagination);
+    if (this.itemsPerPage !== pagination.rowsPerPage) {
+      this.previousPage = null;
+    }
+    this.propOrder = pagination.sortBy;
+    this.reverse = pagination.descending;
+    this.itemsPerPage = pagination.rowsPerPage;
+    this.page = pagination.page;
+    this.loadPage(pagination.page);
+  }
+
   public prepareRemove(instance): void {
     this.removeId = instance.id;
   }
@@ -105,6 +129,6 @@ export default class Post extends Vue {
   }
 
   public closeDialog(): void {
-    (<any>this.$refs.removeEntity).hide();
+    this.removeId = null;
   }
 }

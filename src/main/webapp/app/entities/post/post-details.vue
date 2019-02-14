@@ -10,23 +10,20 @@
                         <dd>
                                 <span>{{post.name}}</span>
                         </dd>
-
                         <dt><span v-text="$t('jhipsterApp.post.tag')">Tag</span></dt>
                         <dd>
                                     <span v-for="(tag, i) in post.tags">{{i > 0 ? ', ' : ''}}
-                                        <router-link :to="'../tag/' + tag.id + '/View'">{{tag.name}}</router-link>
+                                        <router-link :to="'/entity/tag/' + tag.id + '/view'">{{tag.name}}</router-link>
                                     </span>
                         </dd>
                 </dl>
-                <button type="submit"
-                        v-on:click.prevent="previousState()"
-                        class="btn btn-info">
-                    <font-awesome-icon icon="arrow-left"></font-awesome-icon>&nbsp;<span v-text="$t('entity.action.back')"> Back</span>
-                </button>
-
-                <router-link :to="{name: 'PostEdit', params: {postId: post.id}}" tag="button" class="btn btn-primary">
-                    <font-awesome-icon icon="pencil-alt"></font-awesome-icon>&nbsp;<span v-text="$t('entity.action.edit')"> Edit</span>
-                </router-link>
+                <v-btn color="orange darken-2" dark @click.prevent="previousState()">
+                    <v-icon dark left>arrow_back</v-icon><span v-text="$t('entity.action.back')"> Back</span>
+                </v-btn>
+                <v-btn color="primary" dark @click="$router.push({name: 'PostEdit', params: {postId: post.id}})">
+                    <span v-text="$t('entity.action.edit')"> Edit</span>
+                    <v-icon dark right>edit</v-icon>
+                </v-btn>
             </div>
         </div>
     </div>
@@ -34,4 +31,3 @@
 
 <script lang="ts" src="./post-details.component.ts">
 </script>
-

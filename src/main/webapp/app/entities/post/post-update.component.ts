@@ -1,6 +1,7 @@
 import { Component, Vue, Inject } from 'vue-property-decorator';
 
 import { numeric, required, minLength, maxLength } from 'vuelidate/lib/validators';
+import VuelidateVuetifyMixin from '@/shared/validation/vuelidate-vuetify.mixin';
 
 import TagService from '../tag/tag.service';
 import { ITag } from '@/shared/model/tag.model';
@@ -18,7 +19,8 @@ const validations: any = {
 };
 
 @Component({
-  validations
+  validations,
+  mixins: [VuelidateVuetifyMixin]
 })
 export default class PostUpdate extends Vue {
   @Inject('alertService')
