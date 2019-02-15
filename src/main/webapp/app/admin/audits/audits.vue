@@ -1,56 +1,35 @@
 <template>
-    <div v-if="audits">
+    <v-card v-if="audits">
+        <v-card-title>
         <h2 id="audits-page-heading" v-text="$t('audits.title')">Audits</h2>
-
-        <div class="row">
-            <div class="col-md-5">
-                <h4 v-text="$t('audits.filter.title')">Filter by date</h4>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" v-text="$t('audits.filter.from')">from</span>
-                    </div>
-                    <input type="date" class="form-control" name="start" v-model="fromDate" v-on:change="transition()" required/>
-
-                    <div class="input-group-append">
-                        <span class="input-group-text" v-text="$t('audits.filter.to')">To</span>
-                    </div>
-                    <input type="date" class="form-control" name="end" v-model="toDate" v-on:change="transition()" required/>
-                </div>
-            </div>
-        </div>
-
-        <div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead>
-                <tr>
-                    <th v-on:click="changeOrder('auditEventDate', 'timestamp')"><span v-text="$t('audits.table.header.date')">Date</span><font-awesome-icon v-if="propOrder === 'auditEventDate'" icon="sort"></font-awesome-icon></th>
-                    <th v-on:click="changeOrder('principal', 'principal')"><span v-text="$t('audits.table.header.principal')">User</span><font-awesome-icon v-if="propOrder === 'principal'" icon="sort"></font-awesome-icon></th>
-                    <th v-on:click="changeOrder('auditEventType', 'type')"><span v-text="$t('audits.table.header.status')">State</span><font-awesome-icon v-if="propOrder === 'auditEventType'" icon="sort"></font-awesome-icon></th>
-                    <th><span v-text="$t('audits.table.header.data')">Extra data</span></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="audit of orderBy(audits, predicate, reverse === true ? 1 : -1)">
-                    <td><span>{{audit.timestamp | formatDate}}</span></td>
-                    <td><small>{{audit.principal}}</small></td>
-                    <td>{{audit.type}}</td>
-                    <td>
-                        <span v-if="audit.data && audit.data.message">{{audit.data.message}}</span>
-                        <span v-if="audit.data && audit.data.remoteAddress"><span v-text="$t('audits.table.data.remoteAddress')">Remote Address</span> {{audit.data.remoteAddress}}</span>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div>
-            <div class="row justify-content-center">
-                <jhi-item-count :page="page" :total="totalItems" :itemsPerPage="itemsPerPage"></jhi-item-count>
-            </div>
-            <div class="row justify-content-center">
-                <b-pagination size="md" :total-rows="totalItems" v-model="page" :per-page="itemsPerPage" :change="loadPage(page)"></b-pagination>
-            </div>
-        </div>
-    </div>
+        <v-spacer></v-spacer>
+        <v-menu :nudge-right="40" lazy transition="scale-transition" offset-y full-width min-width="290px">
+            <v-text-field slot="activator" v-model="fromDate" :label="$t('audits.filter.from')" prepend-icon="event" readonly></v-text-field>
+            <v-date-picker v-model="fromDate" @change="transition()" no-title scrollable />
+        </v-menu>
+        <v-menu :nudge-right="40" lazy transition="scale-transition" offset-y full-width min-width="290px">
+            <v-text-field slot="activator" v-model="toDate" :label="$t('audits.filter.to')" prepend-icon="event" readonly></v-text-field>
+            <v-date-picker v-model="toDate" @change="transition()" no-title scrollable />
+        </v-menu>
+        </v-card-title>
+        <v-data-table :items="orderBy(audits, predicate, reverse === true ? 1 : -1)" :total-items="totalItems" :pagination.sync="pagination" class="elevation-1">
+            <template slot="headers" slot-scope="props">
+                <th v-on:click="changeOrder('auditEventDate', 'timestamp')"><span v-text="$t('audits.table.header.date')">Date</span><font-awesome-icon v-if="propOrder === 'auditEventDate'" icon="sort"></font-awesome-icon></th>
+                <th v-on:click="changeOrder('principal', 'principal')"><span v-text="$t('audits.table.header.principal')">User</span><font-awesome-icon v-if="propOrder === 'principal'" icon="sort"></font-awesome-icon></th>
+                <th v-on:click="changeOrder('auditEventType', 'type')"><span v-text="$t('audits.table.header.status')">State</span><font-awesome-icon v-if="propOrder === 'auditEventType'" icon="sort"></font-awesome-icon></th>
+                <th><span v-text="$t('audits.table.header.data')">Extra data</span></th>
+            </template>  
+            <template slot="items" slot-scope="props">
+                <td><span>{{props.item.timestamp | formatDate}}</span></td>
+                <td><small>{{props.item.principal}}</small></td>
+                <td>{{props.item.type}}</td>
+                <td>
+                    <span v-if="props.item.data && props.item.data.message">{{props.item.data.message}}</span>
+                    <span v-if="props.item.data && props.item.data.remoteAddress"><span v-text="$t('audits.table.data.remoteAddress')">Remote Address</span> {{props.item.data.remoteAddress}}</span>
+                </td>
+            </template>
+        </v-data-table>
+    </v-card>
 </template>
 
 <script lang="ts" src="./audits.component.ts">

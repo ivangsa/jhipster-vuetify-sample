@@ -6,7 +6,7 @@ import { Component, Inject, Vue } from 'vue-property-decorator';
 export default class JhiAudits extends Vue {
   public audits: any = [];
   public fromDate: any = null;
-  public itemsPerPage = 20;
+  public itemsPerPage = 25;
   public queryCount: any = null;
   public page = 1;
   public previousPage: number = null;
@@ -26,6 +26,30 @@ export default class JhiAudits extends Vue {
     this.today();
     this.previousMonth();
     this.loadAll();
+  }
+
+  public get pagination(): any {
+    const pagination = {
+      descending: this.reverse,
+      page: this.page,
+      rowsPerPage: this.itemsPerPage,
+      sortBy: this.propOrder,
+      totalItems: this.totalItems
+    };
+    console.log('get pagination', pagination);
+    return pagination;
+  }
+
+  public set pagination(pagination: any) {
+    console.log('set pagination', pagination);
+    if (this.itemsPerPage !== pagination.rowsPerPage) {
+      this.previousPage = null;
+    }
+    this.propOrder = pagination.sortBy;
+    this.reverse = pagination.descending;
+    this.itemsPerPage = pagination.rowsPerPage;
+    this.page = pagination.page;
+    this.loadPage(pagination.page);
   }
 
   public previousMonth(): void {
