@@ -9,9 +9,7 @@
             </v-slide-y-transition>
             </v-container>
         </v-content>
-        <v-footer color="indigo" app>
-            <span class="white--text version">{{version}}</span> <span class="white--text">&copy; 2019</span>
-        </v-footer>
+        <jhi-footer></jhi-footer>
         <login-form></login-form>
     </v-app>
 </template>
