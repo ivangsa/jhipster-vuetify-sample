@@ -7,15 +7,17 @@
             <v-layout wrap>
                 <h2 v-if="account" id="password-title"><span v-html="$t('password.title', { 'username': username})">>Password for [<b>{{username}}</b>]</span></h2>
 
-                <v-alert type="success" :value="success" v-html="$t('password.messages.success')">
-                    <strong>Password changed!</strong>
-                </v-alert>
-                <v-alert type="error" :value="error" v-html="$t('password.messages.error')">
-                    <strong>An error has occurred!</strong> The password could not be changed.
-                </v-alert>
-                <v-alert type="error" :value="doNotMatch" v-text="$t('global.messages.error.dontmatch')">
-                    The password and its confirmation do not match!
-                </v-alert>
+                <v-flex xs12>
+                    <v-alert type="success" :value="success" v-html="$t('password.messages.success')">
+                        <strong>Password changed!</strong>
+                    </v-alert>
+                    <v-alert type="error" :value="error" v-html="$t('password.messages.error')">
+                        <strong>An error has occurred!</strong> The password could not be changed.
+                    </v-alert>
+                    <v-alert type="error" :value="doNotMatch" v-text="$t('global.messages.error.dontmatch')">
+                        The password and its confirmation do not match!
+                    </v-alert>
+                </v-flex>
 
                 <v-flex xs12>
                     <v-text-field v-model="resetPassword.currentPassword" @input="$v.resetPassword.currentPassword.$touch()" :label="$t('global.form.currentpassword')" 

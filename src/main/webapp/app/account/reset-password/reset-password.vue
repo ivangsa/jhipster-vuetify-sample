@@ -1,51 +1,40 @@
 <template>
-    <div>
-        <div class="row justify-content-center">
-            <div class="col-md-8">
+  <v-layout row xs12 wrap>
+    <form v-if="!success" name="editForm" role="form" novalidate v-on:submit.prevent="requestReset()">
+      <v-card class="ma-4">
+        <v-card-title primary-title>
+            <v-container grid-list-md>
+            <v-layout wrap>
                 <h1 v-text="$t('reset.request.title')">Reset your password</h1>
 
-                <div class="alert alert-danger" v-html="$t('reset.request.messages.notfound')" v-if="errorEmailNotExists">
-                    <strong>Email address isn't registered!</strong> Please check and try again.
-                </div>
+                <v-flex xs12>
+                    <v-alert type="success" :value="success === 'OK'">
+                        <p v-text="$t('reset.request.messages.success')">Check your emails for details on how to reset your password.</p>
+                    </v-alert>
+                    <v-alert type="info" :value="!success">
+                        <p v-text="$t('reset.request.messages.info')">Enter the email address you used to register.</p>
+                    </v-alert>
+                    <v-alert type="error" :value="errorEmailNotExists" v-html="$t('reset.request.messages.notfound')">
+                        <strong>Email address isn't registered!</strong> Please check and try again.
+                    </v-alert>
+                </v-flex>
 
-                <div class="alert alert-warning" v-if="!success">
-                    <p v-text="$t('reset.request.messages.info')">Enter the email address you used to register.</p>
-                </div>
-
-                <div class="alert alert-success" v-if="success === 'OK'">
-                    <p v-text="$t('reset.request.messages.success')">Check your emails for details on how to reset your password.</p>
-                </div>
-
-                <form v-if="!success" name="form" role="form" v-on:submit.prevent="requestReset()">
-                    <div class="form-group">
-                        <label class="form-control-label" for="email" v-text="$t('global.form.email')">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" v-bind:placeholder="$t('global.form[\'email.placeholder\']')"
-                               :class="{'valid': !$v.resetAccount.email.$invalid, 'invalid': $v.resetAccount.email.$invalid }"
-                               v-model="$v.resetAccount.email.$model" minlength=5 maxlength=254  email required>
-                        <div v-if="$v.resetAccount.email.$anyDirty && $v.resetAccount.email.$invalid">
-                            <small class="form-text text-danger" v-if="!$v.resetAccount.email.required"
-                                   v-text="$t('global.messages.validate.email.required')">
-                                Your email is required.
-                            </small>
-                            <small class="form-text text-danger" v-if="!$v.resetAccount.email.email"
-                                   v-text="$t('global.messages.validate.email.invalid')">
-                                Your email is invalid.
-                            </small>
-                            <small class="form-text text-danger" v-if="!$v.resetAccount.email.minLength"
-                                   v-text="$t('global.messages.validate.email.minlength')">
-                                Your email is required to be at least 5 characters.
-                            </small>
-                            <small class="form-text text-danger" v-if="!$v.resetAccount.email.maxLength"
-                                   v-text="$t('global.messages.validate.email.maxlength')">
-                                Your email cannot be longer than 100 characters.
-                            </small>
-                        </div>
-                    </div>
-                    <button type="submit" :disabled="$v.resetAccount.$invalid" class="btn btn-primary" v-text="$t('reset.request.form.button')">Reset</button>
-                </form>
-            </div>
-        </div>
-    </div>
+                <v-flex xs12>
+                    <v-text-field v-model="resetAccount.email" @input="$v.resetAccount.email.$touch()" :label="$t('global.form.email')" 
+                        :error-messages="validationMessages('resetAccount.email', 'global.messages.validate.email.{constraintTypeToLower}')" required></v-text-field>
+                </v-flex>
+                <v-flex xs12>
+                    <v-btn color="primary" @click.prevent="requestReset()" :disabled="$v.resetAccount.$invalid">
+                        <span v-text="$t('reset.request.form.button')">Reset</span>
+                        <v-icon right>check_circle</v-icon>
+                    </v-btn>                    
+                </v-flex>
+            </v-layout>
+            </v-container>
+          </v-card-title>
+      </v-card>
+    </form>
+  </v-layout>        
 </template>
 
 <script lang="ts" src="./reset-password.component.ts">

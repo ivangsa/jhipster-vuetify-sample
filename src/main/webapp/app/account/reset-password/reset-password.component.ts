@@ -1,4 +1,5 @@
 import { email, maxLength, minLength, required } from 'vuelidate/lib/validators';
+import VuelidateVuetifyMixin from '@/shared/validation/vuelidate-vuetify.mixin';
 import axios from 'axios';
 import { EMAIL_NOT_FOUND_TYPE } from '@/constants';
 import { Vue, Component } from 'vue-property-decorator';
@@ -19,7 +20,8 @@ interface ResetAccount {
 }
 
 @Component({
-  validations
+  validations,
+  mixins: [VuelidateVuetifyMixin]
 })
 export default class ResetPassword extends Vue {
   public success: boolean = null;
