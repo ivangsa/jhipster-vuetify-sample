@@ -44,11 +44,11 @@
                 <p>&nbsp;</p>
                 <v-flex xs12>
                     <div>
-                        <a :href="'#resetPassword'" class="alert-link" v-text="$t('login.password.forgot')">Did you forget your password ?</a>
+                        <a :href="'#/resetPassword'" @click="close(); $router.push({name: 'ResetPassword'})" class="alert-link" v-text="$t('login.password.forgot')">Did you forget your password ?</a>
                     </div>
                     <div>
                         You don't have an account yet ?
-                        <a :href="'#register'" class="alert-link" v-text="$t('global.messages.info.register.link')">Register a new account</a>
+                        <a :href="'#/register'" @click="close(); $router.push({name: 'Register'})" class="alert-link" v-text="$t('global.messages.info.register.link')">Register a new account</a>
                     </div>
                 </v-flex>
             </v-layout>

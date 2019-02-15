@@ -89,16 +89,22 @@
         </v-list-tile>
       </v-list-group>
 
-      <v-list-tile v-if="!authenticated" @click="openLogin()">
-        <v-list-tile-action><v-icon>exit_to_app</v-icon></v-list-tile-action>
-        <v-list-tile-title>
-          <span v-text="$t('global.menu.account.login')">Sign in</span>
-        </v-list-tile-title>
-      </v-list-tile>
       <v-list-tile v-if="authenticated" @click="logout()">
         <v-list-tile-action><v-icon>power_settings_new</v-icon></v-list-tile-action>
         <v-list-tile-title>
           <span v-text="$t('global.menu.account.logout')">Sign out</span>
+        </v-list-tile-title>
+      </v-list-tile>
+      <v-list-tile v-if="!authenticated" @click="$router.push({name: 'Register'})">
+        <v-list-tile-action><font-awesome-icon icon="user-plus" /></v-list-tile-action>
+        <v-list-tile-title>
+          <span v-text="$t('global.menu.account.register')">Register</span>
+        </v-list-tile-title>
+      </v-list-tile>
+      <v-list-tile v-if="!authenticated" @click="openLogin()">
+        <v-list-tile-action><v-icon>exit_to_app</v-icon></v-list-tile-action>
+        <v-list-tile-title>
+          <span v-text="$t('global.menu.account.login')">Sign in</span>
         </v-list-tile-title>
       </v-list-tile>
     </v-list>

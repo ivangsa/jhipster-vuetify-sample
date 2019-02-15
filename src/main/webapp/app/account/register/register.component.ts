@@ -1,11 +1,12 @@
 import Vue from 'vue';
 import { Component, Inject } from 'vue-property-decorator';
 import { required, minLength, maxLength, helpers, email } from 'vuelidate/lib/validators';
+import VuelidateVuetifyMixin from '@/shared/validation/vuelidate-vuetify.mixin';
 import LoginModalService from '@/account/login-modal.service';
 import RegisterService from '@/account/register/register.service';
 import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from '@/constants';
 
-const loginPattern = helpers.regex('alpha', /^[_.@A-Za-z0-9-]*$/);
+const loginPattern = helpers.regex('pattern', /^[_.@A-Za-z0-9-]*$/);
 const validations: any = {
   registerAccount: {
     login: {
@@ -33,7 +34,8 @@ const validations: any = {
   }
 };
 @Component({
-  validations
+  validations,
+  mixins: [VuelidateVuetifyMixin]
 })
 export default class Register extends Vue {
   @Inject('registerService')
