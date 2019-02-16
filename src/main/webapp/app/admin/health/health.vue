@@ -4,7 +4,7 @@
             <span id="health-page-heading" v-text="$t('health.title')">Health Checks</span>
             <v-btn ml-2 color="primary" dark small @click="refresh()" :disabled="updatingHealth">
                 <v-icon>sync</v-icon> <span v-text="$t('health[\'refresh.button\']')">Refresh</span>
-            </v-btn>         
+            </v-btn>
         </h2>
         <div class="elevation-1">
             <table id="healthCheck" class="v-datatable v-table">
