@@ -1,5 +1,9 @@
 <template>
-    <div class="modal-body">
+<v-card>
+    <v-card-title>
+        <h4 slot="modal-title" class="modal-title" id="showMetricsLabel" v-text="$t('metrics.jvm.threads.dump.title')">Threads dump</h4>
+    </v-card-title>
+    <v-card-text>
         <span class="badge badge-primary" v-on:click="threadDumpFilter = ''">All&nbsp;<span class="badge badge-pill badge-default">{{threadDumpData.threadDumpAll}}</span></span>&nbsp;
         <span class="badge badge-success" v-on:click="threadDumpFilter = 'RUNNABLE'">Runnable&nbsp;<span class="badge badge-pill badge-default">{{threadDumpData.threadDumpRunnable}}</span></span>&nbsp;
         <span class="badge badge-info" v-on:click="threadDumpFilter = 'WAITING'">Waiting&nbsp;<span class="badge badge-pill badge-default">{{threadDumpData.threadDumpWaiting}}</span></span>&nbsp;
@@ -24,7 +28,7 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-sm table-responsive">
+            <table class="v-datatable v-table">
                 <thead>
                 <tr>
                     <th v-text="$t('metrics.jvm.threads.dump.blockedtime')">Blocked Time</th>
@@ -46,7 +50,8 @@
             </table>
 
         </div>
-    </div>
+    </v-card-text>
+</v-card>
 </template>
 
 <script lang="ts" src="./metrics-modal.component.ts">
