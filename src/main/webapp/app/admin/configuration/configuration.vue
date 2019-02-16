@@ -3,9 +3,10 @@
         <h2 id="configuration-page-heading" v-text="$t('configuration.title')">Configuration</h2>
 
         <div v-if="allConfiguration && configuration">
-            <span v-text="$t('configuration.filter')">Filter (by prefix)</span> <input type="text" v-model="filtered" class="form-control">
+            <v-text-field v-model="filtered" :label="$t('configuration.filter')"></v-text-field>
             <h3>Spring configuration</h3>
-            <table class="table table-striped table-bordered table-responsive d-table">
+            <div class="elevation-1">
+            <table class="v-datatable v-table theme--light">
                 <thead>
                 <tr>
                     <th class="w-40" v-on:click="changeOrder('prefix')"><span v-text="$t('configuration.table.prefix')">Prefix</span></th>
@@ -26,9 +27,10 @@
                 </tr>
                 </tbody>
             </table>
-            <div v-for="key in keys(allConfiguration)">
+            </div>
+            <div v-for="key in keys(allConfiguration)" class="elevation-1">
                 <h4><span>{{key}}</span></h4>
-                <table class="table table-sm table-striped table-bordered table-responsive d-table">
+                <table class="v-datatable v-table theme--light">
                     <thead>
                     <tr>
                         <th class="w-40">Property</th>
