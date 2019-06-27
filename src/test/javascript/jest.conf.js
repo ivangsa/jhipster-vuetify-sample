@@ -1,6 +1,11 @@
 module.exports = {
   coverageDirectory: '<rootDir>/target/test-results/',
-  coveragePathIgnorePatterns: ['<rootDir>/src/test/javascript'],
+  coveragePathIgnorePatterns: [
+    '<rootDir>/node_modules/',
+    '<rootDir>/src/test/javascript',
+    '<rootDir>/src/main/webapp/app/router',
+    '.*.json'
+  ],
   moduleFileExtensions: ['js', 'json', 'ts', 'vue'],
   transform: {
     '.*\\.(vue)$': 'vue-jest',
@@ -14,9 +19,12 @@ module.exports = {
   testMatch: ['<rootDir>/src/test/javascript/spec/**/+(*.)+(spec.ts)'],
   snapshotSerializers: ['<rootDir>/node_modules/jest-serializer-vue'],
   rootDir: '../../../',
-  globals: {
-    'ts-jest': {
-      tsConfigFile: './tsconfig.test.json'
+  coverageThreshold: {
+    global: {
+      statements: 80,
+      branches: 60,
+      functions: 70,
+      lines: 80
     }
   }
 };

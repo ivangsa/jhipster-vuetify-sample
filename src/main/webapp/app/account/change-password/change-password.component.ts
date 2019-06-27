@@ -1,5 +1,4 @@
 import { maxLength, minLength, required } from 'vuelidate/lib/validators';
-import VuelidateVuetifyMixin from '@/shared/validation/vuelidate-vuetify.mixin';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import Component from 'vue-class-component';
@@ -25,7 +24,6 @@ const validations = {
 
 @Component({
   validations,
-  mixins: [VuelidateVuetifyMixin],
   computed: {
     ...mapGetters(['account'])
   }

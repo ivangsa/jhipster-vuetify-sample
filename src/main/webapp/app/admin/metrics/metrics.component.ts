@@ -13,7 +13,6 @@ export default class JhiMetrics extends Vue {
   public threadData: any = null;
   public threadStats: any = {};
   public updatingMetrics = true;
-  public showMetricsModal = false;
   @Inject('metricsService')
   private metricsService: () => MetricsService;
 
@@ -70,7 +69,6 @@ export default class JhiMetrics extends Vue {
   }
 
   openModal(): void {
-    this.showMetricsModal = true;
     if ((<any>this.$refs.metricsModal).show) {
       (<any>this.$refs.metricsModal).show();
     }
@@ -114,5 +112,13 @@ export default class JhiMetrics extends Vue {
       }
     }
     return time_string;
+  }
+
+  public isObjectExisting(metrics: any, key: string): boolean {
+    return metrics && metrics[key];
+  }
+
+  public isObjectExistingAndNotEmpty(metrics: any, key: string): boolean {
+    return this.isObjectExisting(metrics, key) && JSON.stringify(metrics[key]) !== '{}';
   }
 }

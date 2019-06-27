@@ -16,16 +16,16 @@ export default class AccountService {
     this.retrieveProfiles();
   }
 
-  public retrieveProfiles(): any {
+  public retrieveProfiles(): void {
     axios.get('management/info').then(res => {
-      if (res.data && res.data.activeProfiles && res.data.activeProfiles.indexOf(res.data['display-ribbon-on-profiles']) > -1) {
+      if (res.data && res.data.activeProfiles) {
         this.store.commit('setRibbonOnProfiles', res.data['display-ribbon-on-profiles']);
         this.store.commit('setActiveProfiles', res.data['activeProfiles']);
       }
     });
   }
 
-  public retrieveAccount(): any {
+  public retrieveAccount(): void {
     this.store.commit('authenticate');
     axios
       .get('api/account')

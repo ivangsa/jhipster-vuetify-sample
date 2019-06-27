@@ -1,14 +1,14 @@
 import Component from 'vue-class-component';
 import { Vue, Inject } from 'vue-property-decorator';
-import LoginModalService from '@/account/login-modal.service';
+import LoginService from '@/account/login.service';
 import ActivateService from './activate.service';
 
 @Component
 export default class Activate extends Vue {
   @Inject('activateService')
   private activateService: () => ActivateService;
-  @Inject('loginModalService')
-  private loginModalService: () => LoginModalService;
+  @Inject('loginService')
+  private loginService: () => LoginService;
   success = false;
   error = false;
 
@@ -36,6 +36,6 @@ export default class Activate extends Vue {
   }
 
   public openLogin(): void {
-    this.loginModalService().openLogin((<any>this).$root);
+    this.loginService().openLogin((<any>this).$root);
   }
 }

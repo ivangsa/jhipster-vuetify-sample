@@ -3,8 +3,8 @@ import Vue from 'vue';
 import buildPaginationQueryOpts from '@/shared/sort/sorts';
 
 export default class UserManagementService {
-  public get(login): Promise<any> {
-    return axios.get(`api/users/${login}`);
+  public get(userId: string): Promise<any> {
+    return axios.get(`api/users/${userId}`);
   }
 
   public create(user): Promise<any> {
@@ -15,7 +15,7 @@ export default class UserManagementService {
     return axios.put('api/users', user);
   }
 
-  public remove(userId): Promise<any> {
+  public remove(userId: string): Promise<any> {
     return axios.delete(`api/users/${userId}`);
   }
 

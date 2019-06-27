@@ -1,14 +1,14 @@
 import Component from 'vue-class-component';
 import { Inject, Vue } from 'vue-property-decorator';
-import LoginModalService from '@/account/login-modal.service';
+import LoginService from '@/account/login.service';
 
 @Component
 export default class Home extends Vue {
-  @Inject('loginModalService')
-  private loginModalService: () => LoginModalService;
+  @Inject('loginService')
+  private loginService: () => LoginService;
 
   public openLogin(): void {
-    this.loginModalService().openLogin((<any>this).$root);
+    this.loginService().openLogin((<any>this).$root);
   }
 
   public get authenticated(): boolean {

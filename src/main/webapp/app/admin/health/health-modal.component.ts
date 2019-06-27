@@ -3,10 +3,8 @@ import { Component, Inject, Prop, Vue } from 'vue-property-decorator';
 
 @Component
 export default class JhiHealthModal extends Vue {
-  @Prop()
-  currentHealth!: any;
-  @Inject('healthService')
-  private healthService: () => HealthService;
+  @Prop() currentHealth!: any;
+  @Inject('healthService') private healthService: () => HealthService;
 
   public baseName(name: string): any {
     return this.healthService().getBaseName(name);

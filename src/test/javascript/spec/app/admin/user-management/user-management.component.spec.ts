@@ -2,6 +2,7 @@ import { shallowMount, createLocalVue, Wrapper } from '@vue/test-utils';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
+import AlertService from '@/shared/alert/alert.service';
 import * as config from '@/shared/config/config';
 import UserManagement from '@/admin/user-management/user-management.vue';
 import UserManagementClass from '@/admin/user-management/user-management.component';
@@ -14,6 +15,7 @@ config.initVueApp(localVue);
 const i18n = config.initI18N(localVue);
 const store = config.initVueXStore(localVue);
 localVue.component('font-awesome-icon', FontAwesomeIcon);
+localVue.component('b-alert', {});
 localVue.component('router-link', {});
 localVue.directive('b-modal', {});
 
@@ -49,6 +51,7 @@ describe('UserManagement Component', () => {
         bModal: true
       },
       provide: {
+        alertService: () => new AlertService(store),
         userService: () => new UserManagementService()
       }
     });
@@ -76,11 +79,11 @@ describe('UserManagement Component', () => {
       mockedAxios.put.mockReturnValue(Promise.resolve({}));
 
       // WHEN
-      userManagement.setActive({ id: 'test' }, true);
+      userManagement.setActive({ id: '123' }, true);
       await userManagement.$nextTick();
 
       // THEN
-      expect(mockedAxios.put).toHaveBeenCalledWith(`api/users`, { id: 'test', activated: true });
+      expect(mockedAxios.put).toHaveBeenCalledWith(`api/users`, { id: '123', activated: true });
       expect(mockedAxios.get).toHaveBeenCalledWith(`api/users?sort=id,desc&page=0&size=20`);
     });
   });
@@ -88,15 +91,15 @@ describe('UserManagement Component', () => {
   describe('confirmDelete', () => {
     it('Should call delete service on confirmDelete', async () => {
       // GIVEN
-      mockedAxios.delete.mockReturnValue(Promise.resolve({}));
+      mockedAxios.delete.mockReturnValue(Promise.resolve({ headers: {} }));
 
       // WHEN
-      userManagement.prepareRemove({ login: 'test' });
+      userManagement.prepareRemove({ login: '123' });
       userManagement.deleteUser();
       await userManagement.$nextTick();
 
       // THEN
-      expect(mockedAxios.delete).toHaveBeenCalledWith(`api/users/test`);
+      expect(mockedAxios.delete).toHaveBeenCalledWith(`api/users/'123'`);
       expect(mockedAxios.get).toHaveBeenCalledWith(`api/users?sort=id,desc&page=0&size=20`);
     });
   });

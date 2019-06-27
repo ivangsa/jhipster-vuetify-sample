@@ -23,7 +23,11 @@ describe('Configuration Component', () => {
 
   beforeEach(() => {
     mockedAxios.get.mockReset();
-    mockedAxios.get.mockReturnValue(Promise.resolve({ data: { contexts: { beans: {} }, propertySources: {} } }));
+    mockedAxios.get.mockReturnValue(
+      Promise.resolve({
+        data: { contexts: [{ beans: [{ prefix: 'A' }, { prefix: 'B' }] }], propertySources: [{ properties: { key1: { value: 'value' } } }] }
+      })
+    );
     wrapper = shallowMount<ConfigurationClass>(Configuration, {
       store,
       i18n,

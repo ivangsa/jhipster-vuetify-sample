@@ -10,7 +10,8 @@ const Home = () => import('../core/home/home.vue');
 const Error = () => import('../core/error/error.vue');
 const Register = () => import('../account/register/register.vue');
 const Activate = () => import('../account/activate/activate.vue');
-const ResetPassword = () => import('../account/reset-password/reset-password.vue');
+const ResetPasswordInit = () => import('../account/reset-password/init/reset-password-init.vue');
+const ResetPasswordFinish = () => import('../account/reset-password/finish/reset-password-finish.vue');
 const ChangePassword = () => import('../account/change-password/change-password.vue');
 const Settings = () => import('../account/settings/settings.vue');
 const JhiUserManagementComponent = () => import('../admin/user-management/user-management.vue');
@@ -23,24 +24,13 @@ const JhiLogsComponent = () => import('../admin/logs/logs.vue');
 const JhiAuditsComponent = () => import('../admin/audits/audits.vue');
 const JhiMetricsComponent = () => import('../admin/metrics/metrics.vue');
 /* tslint:disable */
-// prettier-ignore
-const Post = () => import('../entities/post/post.vue');
-// prettier-ignore
-const PostUpdate = () => import('../entities/post/post-update.vue');
-// prettier-ignore
-const PostDetails = () => import('../entities/post/post-details.vue');
-// prettier-ignore
-const Tag = () => import('../entities/tag/tag.vue');
-// prettier-ignore
-const TagUpdate = () => import('../entities/tag/tag-update.vue');
-// prettier-ignore
-const TagDetails = () => import('../entities/tag/tag-details.vue');
 // jhipster-needle-add-entity-to-router-import - JHipster will import entities to the router here
 
 Vue.use(Router);
 
 // prettier-ignore
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -70,17 +60,21 @@ export default new Router({
       component: Activate
     },
     {
-      path: '/resetPassword',
-      name: 'ResetPassword',
-      component: ResetPassword
+      path: '/reset/request',
+      name: 'ResetPasswordInit',
+      component: ResetPasswordInit
+    },
+    {
+      path: '/reset/finish',
+      name: 'ResetPasswordFinish',
+      component: ResetPasswordFinish
     },
     {
       path: '/account/password',
       name: 'ChangePassword',
       component: ChangePassword,
       meta: { authorities: ['ROLE_USER'] }
-    }
-,
+    },
     {
       path: '/account/settings',
       name: 'Settings',
@@ -147,16 +141,6 @@ export default new Router({
       component: JhiConfigurationComponent,
       meta: { authorities: ['ROLE_ADMIN'] }
     }
-    ,
-  { path: '/entity/post', name: 'Post', component: Post, meta: { authorities: ['ROLE_USER'] } },
-  { path: '/entity/post/new', name: 'PostCreate', component: PostUpdate, meta: { authorities: ['ROLE_USER'] } },
-  { path: '/entity/post/:postId/edit', name: 'PostEdit', component: PostUpdate, meta: { authorities: ['ROLE_USER'] } },
-  { path: '/entity/post/:postId/view', name: 'PostView', component: PostDetails, meta: { authorities: ['ROLE_USER'] } }
-    ,
-  { path: '/entity/tag', name: 'Tag', component: Tag, meta: { authorities: ['ROLE_USER'] } },
-  { path: '/entity/tag/new', name: 'TagCreate', component: TagUpdate, meta: { authorities: ['ROLE_USER'] } },
-  { path: '/entity/tag/:tagId/edit', name: 'TagEdit', component: TagUpdate, meta: { authorities: ['ROLE_USER'] } },
-  { path: '/entity/tag/:tagId/view', name: 'TagView', component: TagDetails, meta: { authorities: ['ROLE_USER'] } }
     // jhipster-needle-add-entity-to-router - JHipster will add entities to the router here
   ]
 });

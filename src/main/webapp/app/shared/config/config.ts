@@ -1,7 +1,7 @@
 import Vuex from 'vuex';
 import VueI18n from 'vue-i18n';
 import JhiFormatter from './formatter';
-import setupAxiosInterceptors from '@/shared/config/axios-interceptor';
+import { setupAxiosInterceptors } from '@/shared/config/axios-interceptor';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faSort } from '@fortawesome/free-solid-svg-icons/faSort';
@@ -20,7 +20,7 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart';
 import { faList } from '@fortawesome/free-solid-svg-icons/faList';
 import { faTasks } from '@fortawesome/free-solid-svg-icons/faTasks';
 import { faBook } from '@fortawesome/free-solid-svg-icons/faBook';
-import { faClock } from '@fortawesome/free-solid-svg-icons/faClock';
+import { faLock } from '@fortawesome/free-solid-svg-icons/faLock';
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons/faSignInAlt';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons/faSignOutAlt';
 import { faThList } from '@fortawesome/free-solid-svg-icons/faThList';
@@ -69,7 +69,7 @@ export function initFortAwesome(vue) {
     faTasks,
     faBook,
     faHdd,
-    faClock,
+    faLock,
     faSignInAlt,
     faSignOutAlt,
     faWrench,

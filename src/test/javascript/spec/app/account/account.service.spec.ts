@@ -58,7 +58,7 @@ describe('Account Service test suite', () => {
   it('should init service and retrieve account if already logged in before but exception occured and should be logged out', async () => {
     localStorage.setItem('jhi-authenticationToken', 'token');
 
-    mockedAxios.get.mockReturnValue(Promise.reject({}));
+    mockedAxios.get = jest.fn(apiName => (apiName === 'api/account' ? Promise.reject() : Promise.resolve({})));
     accountService = await new AccountService(store, new TranslationService(store, i18n), router);
 
     expect((<any>router).history.current.fullPath).toBe('/');
@@ -83,7 +83,7 @@ describe('Account Service test suite', () => {
   });
 
   it('should init service as not authentified and not return any authorities', async () => {
-    mockedAxios.get.mockReturnValue(Promise.reject());
+    mockedAxios.get = jest.fn(apiName => (apiName === 'api/account' ? Promise.reject() : Promise.resolve({})));
     accountService = await new AccountService(store, new TranslationService(store, i18n), router);
 
     expect(accountService.hasAnyAuthority('ADMIN')).toBe(false);

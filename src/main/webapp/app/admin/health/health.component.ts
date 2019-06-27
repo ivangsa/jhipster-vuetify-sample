@@ -11,8 +11,7 @@ export default class JhiHealth extends Vue {
   public healthData: any = null;
   public currentHealth: any = null;
   public updatingHealth = false;
-  @Inject('healthService')
-  private healthService: () => HealthService;
+  @Inject('healthService') private healthService: () => HealthService;
 
   public mounted(): void {
     this.refresh();
@@ -48,7 +47,7 @@ export default class JhiHealth extends Vue {
 
   public showHealth(health: any): void {
     this.currentHealth = health;
-    //(<any>this.$refs.healthModal).show();
+    (<any>this.$refs.healthModal).show();
   }
 
   public subSystemName(name: string): string {

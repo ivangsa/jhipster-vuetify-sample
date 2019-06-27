@@ -10,8 +10,7 @@ export default class JhiConfiguration extends Vue {
   public configuration: any = false;
   public configKeys: any[] = [];
   public filtered = '';
-  @Inject('configurationService')
-  private configurationService: () => ConfigurationService;
+  @Inject('configurationService') private configurationService: () => ConfigurationService;
 
   public mounted(): void {
     this.init();

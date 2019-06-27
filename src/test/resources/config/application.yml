@@ -13,31 +13,40 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
-
 spring:
-    application:
-        name: jhipster
-    cache:
-        type: simple
-    data:
-        mongodb:
-            host: localhost
-            port: 0
-            database: jhipster
-    mail:
-        host: localhost
-    messages:
-        basename: i18n/messages
-    mvc:
-        favicon:
-            enabled: false
-    thymeleaf:
-        mode: HTML
-
+  application:
+    name: jhipster
+  data:
+    mongodb:
+      host: localhost
+      port: 0
+      database: jhipster
+  mail:
+    host: localhost
+  main:
+    allow-bean-definition-overriding: true
+  messages:
+    basename: i18n/messages
+  mvc:
+    favicon:
+      enabled: false
+  task:
+    execution:
+      thread-name-prefix: jhipster-task-
+      pool:
+        core-size: 1
+        max-size: 50
+        queue-capacity: 10000
+    scheduling:
+      thread-name-prefix: jhipster-scheduling-
+      pool:
+        size: 1
+  thymeleaf:
+    mode: HTML
 
 server:
-    port: 10344
-    address: localhost
+  port: 10344
+  address: localhost
 
 # ===================================================================
 # JHipster specific properties
@@ -46,31 +55,31 @@ server:
 # ===================================================================
 
 jhipster:
-    async:
-        core-pool-size: 1
-        max-pool-size: 50
-        queue-capacity: 10000
+  clientApp:
+    name: 'jhipsterApp'
+  logging:
+    # To test json console appender
+    use-json-format: true # By default, logs are in Json format
     # To test logstash appender
-    logging:
-        logstash:
-            enabled: true
-            host: localhost
-            port: 5000
-            queue-size: 512
-    mail:
-        from: test@localhost
-        base-url: http://127.0.0.1:8080
-    security:
-        authentication:
-            jwt:
-                # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
-                base64-secret: YmRkMmM5MTBhZGFkMzcyNGYxZWYzYTA2MDliNDBlYzhlNGM5NWY1MzBiMjdmNTdlNDJmYTBmMzc3NGRiNzg0YWQ1NmYzZmJiZGIxZDc5NGRhNjllM2FkM2NlOGViM2Y2YTU1MmI4MGE0NGU1NGI4YmJkMTY1ODhjNTBiMWQ1NDY=
-                # Token is valid 24 hours
-                token-validity-in-seconds: 86400
-    metrics:
-        logs: # Reports metrics in the logs
-            enabled: true
-            report-frequency: 60 # in seconds
+    logstash:
+      enabled: true
+      host: localhost
+      port: 5000
+      queue-size: 512
+  mail:
+    from: test@localhost
+    base-url: http://127.0.0.1:8080
+  security:
+    authentication:
+      jwt:
+        # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
+        base64-secret: YmRkMmM5MTBhZGFkMzcyNGYxZWYzYTA2MDliNDBlYzhlNGM5NWY1MzBiMjdmNTdlNDJmYTBmMzc3NGRiNzg0YWQ1NmYzZmJiZGIxZDc5NGRhNjllM2FkM2NlOGViM2Y2YTU1MmI4MGE0NGU1NGI4YmJkMTY1ODhjNTBiMWQ1NDY=
+        # Token is valid 24 hours
+        token-validity-in-seconds: 86400
+  metrics:
+    logs: # Reports metrics in the logs
+      enabled: true
+      report-frequency: 60 # in seconds
 
 # ===================================================================
 # Application specific properties

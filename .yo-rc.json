@@ -4,7 +4,7 @@
       "packageName": "org.sample",
       "nativeLanguage": "en"
     },
-    "jhipsterVersion": "5.8.1",
+    "jhipsterVersion": "6.1.2",
     "applicationType": "monolith",
     "baseName": "jhipster",
     "packageName": "org.sample",
@@ -30,7 +30,7 @@
     "otherModules": [
       {
         "name": "generator-jhipster-vuejs",
-        "version": "1.0.0-beta.0"
+        "version": "1.1.0"
       }
     ],
     "enableTranslation": true,
@@ -38,14 +38,17 @@
     "nativeLanguage": "en",
     "languages": ["en", "es"],
     "blueprint": "generator-jhipster-vuejs",
-    "blueprintVersion": "1.0.0-beta.0"
+    "blueprintVersion": "1.1.0"
   },
   "generator-jhipster-vuejs": {
-    "jhipsterVersion": "5.8.1",
+    "jhipsterVersion": "6.1.2",
     "applicationType": "monolith",
     "baseName": "jhipster",
     "clientFramework": "vue",
     "useSass": true,
-    "clientPackageManager": "npm"
+    "clientPackageManager": "npm",
+    "enableTranslation": true,
+    "clientTheme": "none",
+    "languages": ["en", "es"]
   }
 }

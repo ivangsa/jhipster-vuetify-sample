@@ -25,24 +25,16 @@ module.exports = merge(baseWebpackConfig, {
     main: './src/main/webapp/app/main'
   },
   output: {
-    path: jhiUtils.root('target/www'),
+    path: jhiUtils.root('target/classes/static/'),
     filename: 'app/[name].bundle.js',
     chunkFilename: 'app/[id].chunk.js'
   },
   devServer: {
-    contentBase: './target/www',
+    contentBase: './target/classes/static/',
     port: 9060,
     proxy: [
       {
-        context: [
-          /* jhipster-needle-add-entity-to-webpack - JHipster will add entity api paths here */
-          '/api',
-          '/management',
-          '/swagger-resources',
-          '/v2/api-docs',
-          '/h2-console',
-          '/auth'
-        ],
+        context: ['/api', '/services', '/management', '/swagger-resources', '/v2/api-docs', '/h2-console', '/auth'],
         target: 'http://127.0.0.1:8080',
         secure: false,
         headers: { host: 'localhost:9000' }
@@ -50,7 +42,8 @@ module.exports = merge(baseWebpackConfig, {
     ],
     watchOptions: {
       ignored: /node_modules/
-    }
+    },
+    historyApiFallback: true
   },
   plugins: [
     new webpack.DefinePlugin({

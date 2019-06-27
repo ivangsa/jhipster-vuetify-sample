@@ -1,23 +1,17 @@
 import { Component, Inject, Vue } from 'vue-property-decorator';
-import axios from 'axios';
 import { VERSION } from '@/constants';
-import LoginModalService from '@/account/login-modal.service';
-
+import LoginService from '@/account/login.service';
 import AccountService from '@/account/account.service';
 import TranslationService from '@/locale/translation.service';
 
 @Component
 export default class JhiNavbar extends Vue {
-  @Inject('loginModalService')
-  private loginModalService: () => LoginModalService;
+  @Inject('loginService')
+  private loginService: () => LoginService;
+  @Inject('translationService') private translationService: () => TranslationService;
 
-  @Inject('translationService')
-  private translationService: () => TranslationService;
-
-  @Inject('accountService')
-  private accountService: () => AccountService;
+  @Inject('accountService') private accountService: () => AccountService;
   public version = VERSION ? 'v' + VERSION : '';
-  public isNavbarCollapsed = true;
   private currentLanguage = this.$store.getters.currentLanguage;
   private languages: any = this.$store.getters.languages;
 
@@ -30,18 +24,6 @@ export default class JhiNavbar extends Vue {
     return paths.some(path => {
       return this.$route.path.indexOf(path) === 0; // current path starts with this path string
     });
-  }
-
-  public getImageUrl(): boolean {
-    return false;
-  }
-
-  public toogleDrawer(): void {
-    this.isNavbarCollapsed = !this.isNavbarCollapsed;
-  }
-
-  public collapseNavbar(): void {
-    this.isNavbarCollapsed = true;
   }
 
   public changeLanguage(newLanguage: string): void {
@@ -60,7 +42,7 @@ export default class JhiNavbar extends Vue {
   }
 
   public openLogin(): void {
-    this.loginModalService().openLogin((<any>this).$root);
+    this.loginService().openLogin((<any>this).$root);
   }
 
   public get authenticated(): boolean {

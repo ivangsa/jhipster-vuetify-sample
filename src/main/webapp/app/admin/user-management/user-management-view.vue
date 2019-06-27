@@ -2,7 +2,7 @@
     <div class="row justify-content-center">
         <div class="col-8">
             <div v-if="user">
-                <h2>
+                <h2 class="jh-entity-heading">
                     <span v-text="$t('userManagement.detail.title')">User</span> [<b>{{user.login}}</b>]
                 </h2>
                 <dl class="row jh-entity-details">
@@ -31,7 +31,7 @@
                     <dt><span v-text="$t('userManagement.profiles')">Profiles</span></dt>
                     <dd>
                         <ul class="list-unstyled">
-                            <li v-for="authority of user.authorities">
+                            <li v-for="authority of user.authorities" :key="authority">
                                 <b-badge variant="info">{{authority}}</b-badge>
                             </li>
                         </ul>

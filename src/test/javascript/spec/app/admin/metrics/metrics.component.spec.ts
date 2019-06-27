@@ -260,7 +260,7 @@ describe('Metrics Component', () => {
       await metricsComponent.$nextTick();
 
       // THEN
-      expect(mockedAxios.get).toHaveBeenCalledWith('management/jhi-metrics');
+      expect(mockedAxios.get).toHaveBeenCalledWith('management/jhimetrics');
       expect(mockedAxios.get).toHaveBeenCalledWith('management/threaddump');
       expect(metricsComponent.metrics).toHaveProperty('jvm');
       expect(metricsComponent.metrics).toEqual(response);

@@ -1,8 +1,8 @@
 import { email, maxLength, minLength, required } from 'vuelidate/lib/validators';
-import VuelidateVuetifyMixin from '@/shared/validation/vuelidate-vuetify.mixin';
 import { Component, Inject, Vue } from 'vue-property-decorator';
 import UserManagementService from './user-management.service';
 import { IUser, User } from '@/shared/model/user.model';
+import AlertService from '@/shared/alert/alert.service';
 
 function loginValidator(value) {
   if (typeof value === 'undefined' || value === null || value === '') {
@@ -35,12 +35,11 @@ const validations: any = {
 };
 
 @Component({
-  validations,
-  mixins: [VuelidateVuetifyMixin]
+  validations
 })
 export default class JhiUserManagementEdit extends Vue {
-  @Inject('userService')
-  private userManagementService: () => UserManagementService;
+  @Inject('alertService') private alertService: () => AlertService;
+  @Inject('userService') private userManagementService: () => UserManagementService;
   public userAccount: IUser;
   public isSaving = false;
   public authorities: any[] = [];
@@ -69,7 +68,7 @@ export default class JhiUserManagementEdit extends Vue {
       });
   }
 
-  public init(userId: number): void {
+  public init(userId: string): void {
     this.userManagementService()
       .get(userId)
       .then(res => {
@@ -86,16 +85,26 @@ export default class JhiUserManagementEdit extends Vue {
     if (this.userAccount.id) {
       this.userManagementService()
         .update(this.userAccount)
-        .then(() => this.returnToList());
+        .then(res => {
+          this.returnToList();
+          this.alertService().showAlert(this.getMessageFromHeader(res), 'info');
+        });
     } else {
       this.userManagementService()
         .create(this.userAccount)
-        .then(() => this.returnToList());
+        .then(res => {
+          this.returnToList();
+          this.alertService().showAlert(this.getMessageFromHeader(res), 'success');
+        });
     }
   }
 
   private returnToList(): void {
     this.isSaving = false;
     (<any>this).$router.go(-1);
+  }
+
+  private getMessageFromHeader(res: any): any {
+    return this.$t(res.headers['x-jhipsterapp-alert'], { param: res.headers['x-jhipsterapp-params'] });
   }
 }

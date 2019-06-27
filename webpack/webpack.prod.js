@@ -27,7 +27,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     main: './src/main/webapp/app/main'
   },
   output: {
-    path: jhiUtils.root('target/www'),
+    path: jhiUtils.root('target/classes/static/'),
     filename: 'app/[name].[hash].bundle.js',
     chunkFilename: 'app/[id].[hash].chunk.js'
   },

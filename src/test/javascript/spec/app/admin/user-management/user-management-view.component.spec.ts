@@ -61,11 +61,11 @@ describe('UserManagementView Component', () => {
       mockedAxios.get.mockReturnValue(Promise.resolve({ data: userData }));
 
       // WHEN
-      userManagementView.init(1);
+      userManagementView.init('123');
       await userManagementView.$nextTick();
 
       // THEN
-      expect(mockedAxios.get).toHaveBeenCalledWith(`api/users/1`);
+      expect(mockedAxios.get).toHaveBeenCalledWith(`api/users/'123'`);
       expect(userManagementView.user).toEqual(userData);
     });
   });

@@ -1,10 +1,14 @@
 <template>
-    <v-footer color="indigo" app>
-        <div class="white--text footer ml-2" v-text="$t('footer')">This is your footer</div>
-        <v-spacer></v-spacer>
-        <div class="white--text version mr-2">{{version}} &copy; 2019</div>
-    </v-footer>
+    <div id="footer" class="footer">
+        <p v-text="$t('footer')">This is your footer</p>
+    </div>
 </template>
 
 <script lang="ts" src="./jhi-footer.component.ts">
 </script>
+
+<style scoped>
+    .footer {
+        text-align: left;
+    }
+</style>

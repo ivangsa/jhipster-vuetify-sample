@@ -7,8 +7,6 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
-        "post": "Post",
-        "tag": "Tag",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
@@ -36,15 +34,15 @@
       "language": "Language"
     },
     "form": {
-      "username": "Username",
+      "username.label": "Username",
       "username.placeholder": "Your username",
-      "currentpassword": "Current password",
+      "currentpassword.label": "Current password",
       "currentpassword.placeholder": "Current password",
-      "newpassword": "New password",
+      "newpassword.label": "New password",
       "newpassword.placeholder": "New password",
-      "confirmpassword": "New password confirmation",
+      "confirmpassword.label": "New password confirmation",
       "confirmpassword.placeholder": "Confirm the new password",
-      "email": "Email",
+      "email.label": "Email",
       "email.placeholder": "Your email"
     },
     "messages": {

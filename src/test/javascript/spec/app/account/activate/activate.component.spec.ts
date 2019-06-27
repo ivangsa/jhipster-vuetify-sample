@@ -5,7 +5,7 @@ import * as config from '@/shared/config/config';
 import Activate from '@/account/activate/activate.vue';
 import ActivateClass from '@/account/activate/activate.component';
 import ActivateService from '@/account/activate/activate.service';
-import LoginModalService from '@/account/login-modal.service';
+import LoginService from '@/account/login.service';
 
 const localVue = createLocalVue();
 const mockedAxios: any = axios;
@@ -32,7 +32,7 @@ describe('Activate Component', () => {
       localVue,
       provide: {
         activateService: () => new ActivateService(),
-        loginModalService: () => new LoginModalService()
+        loginService: () => new LoginService()
       }
     });
     activate = wrapper.vm;
@@ -40,6 +40,15 @@ describe('Activate Component', () => {
 
   it('should be a Vue instance', () => {
     expect(wrapper.isVueInstance()).toBeTruthy();
+  });
+
+  it('should display error when activation fails using route', async () => {
+    mockedAxios.get.mockReturnValue(Promise.reject({}));
+    activate.beforeRouteEnter({ query: { key: 'invalid-key' } }, null, cb => cb(activate));
+    await activate.$nextTick();
+
+    expect(activate.error).toBeTruthy();
+    expect(activate.success).toBeFalsy();
   });
 
   it('should display error when activation fails', async () => {

@@ -1,12 +1,11 @@
 import Component from 'vue-class-component';
 import { Vue, Inject } from 'vue-property-decorator';
-import LoginModalService from '@/account/login-modal.service';
+import LoginService from '@/account/login.service';
 
 @Component
 export default class Error extends Vue {
-  @Inject('loginModalService')
-  private loginModalService: () => LoginModalService;
-
+  @Inject('loginService')
+  private loginService: () => LoginService;
   errorMessage: string = null;
   error403 = false;
   error404 = false;
@@ -39,7 +38,7 @@ export default class Error extends Vue {
     this.error404 = error404;
 
     if (!this.$store.getters.authenticated && this.error403) {
-      this.loginModalService().openLogin((<any>this).$root);
+      this.loginService().openLogin((<any>this).$root);
     }
   }
 }

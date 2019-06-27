@@ -2,17 +2,17 @@
   <div>
     <h2>
       <span id="metrics-page-heading" v-text="$t('metrics.title')">Application Metrics</span>
-      <v-btn ml-2 color="primary" dark small @click="refresh()">
-          <v-icon>sync</v-icon> <span v-text="$t('health[\'refresh.button\']')">Refresh</span>
-      </v-btn>
+      <button class="btn btn-primary float-right" v-on:click="refresh()">
+        <font-awesome-icon icon="sync"></font-awesome-icon> <span v-text="$t('metrics[\'refresh.button\']')">Refresh</span>
+      </button>
     </h2>
 
     <h3 v-text="$t('metrics.jvm.title')">JVM Metrics</h3>
-    <div class="layout row wrap" v-if="!updatingMetrics">
-      <div class="flex md4">
+    <div class="row" v-if="!updatingMetrics">
+      <div class="col-md-4">
         <h4 v-text="$t('metrics.jvm.memory.title')">Memory</h4>
         <div>
-          <div v-for="(entry, key) of metrics.jvm">
+          <div v-for="(entry, key) of metrics.jvm" :key="key">
             <span v-if="entry.max !== -1">
               <span>{{key}}</span> ({{formatNumber1(entry.used / 1048576)}}M / {{formatNumber1(entry.max / 1048576)}}M)
             </span>
@@ -26,7 +26,7 @@
           </div>
         </div>
       </div>
-      <div class="flex md4">
+      <div class="col-md-4">
         <h4 v-text="$t('metrics.jvm.threads.title')">Threads </h4>
         <span><span v-text="$t('metrics.jvm.threads.runnable')">Runnable</span> {{threadStats.threadDumpRunnable}}</span>
         <b-progress variant="success" :max="threadStats.threadDumpAll" striped >
@@ -58,7 +58,7 @@
         </span>
 
       </div>
-      <div class="flex md4">
+      <div class="col-md-4">
         <h4>System</h4>
         <div class="row" v-if="!updatingMetrics">
           <div class="col-md-4">Uptime</div>
@@ -106,9 +106,9 @@
     </div>
 
     <h3 v-text="$t('metrics.jvm.gc.title')">Garbage collections</h3>
-    <div class="layout row wrap">
-      <div class="flex md4">
-        <div v-if="!updatingMetrics && metrics.garbageCollector">
+    <div class="row" v-if="!updatingMetrics && isObjectExisting(metrics, 'garbageCollector')">
+      <div class="col-md-4">
+        <div>
           <span>
             GC Live Data Size/GC Max Data Size
             ({{formatNumber1(metrics.garbageCollector['jvm.gc.live.data.size'] / 1048576)}}M
@@ -121,8 +121,8 @@
           </b-progress>
         </div>
       </div>
-      <div class="flex md4">
-        <div v-if="!updatingMetrics && metrics.garbageCollector">
+      <div class="col-md-4">
+        <div>
           <span>
             GC Memory Promoted/GC Memory Allocated
             ({{formatNumber1(metrics.garbageCollector['jvm.gc.memory.promoted'] / 1048576)}}M
@@ -135,18 +135,18 @@
           </b-progress>
         </div>
       </div>
-      <div class="flex md4">
-        <div class="row" v-if="!updatingMetrics && metrics.garbageCollector">
+      <div class="col-md-4">
+        <div class="row">
           <div class="col-md-9">Classes loaded</div>
           <div class="col-md-3 text-right">{{metrics.garbageCollector.classesLoaded}}</div>
         </div>
-        <div class="row" v-if="!updatingMetrics && metrics.garbageCollector">
+        <div class="row">
           <div class="col-md-9">Classes unloaded</div>
           <div class="col-md-3 text-right">{{metrics.garbageCollector.classesUnloaded}}</div>
         </div>
       </div>
-      <div class="table-responsive" v-if="!updatingMetrics && metrics.garbageCollector">
-        <table class="v-datatable v-table">
+      <div class="table-responsive">
+        <table class="table table-striped">
           <thead>
           <tr>
             <th></th>
@@ -178,7 +178,7 @@
     </div>
 
     <h3 v-text="$t('metrics.jvm.http.title')">HTTP requests (time in millisecond)</h3>
-    <table class="v-datatable v-table" v-if="!updatingMetrics">
+    <table class="table table-striped" v-if="!updatingMetrics && isObjectExisting(metrics, 'http.server.requests')">
       <thead>
       <tr>
         <th v-text="$t('metrics.jvm.http.table.code')">Code</th>
@@ -188,7 +188,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(entry, key) of metrics['http.server.requests']['percode']">
+      <tr v-for="(entry, key) of metrics['http.server.requests']['percode']" :key="key">
         <td>{{key}}</td>
         <td>
           <b-progress variant="success" animated :max="metrics['http.server.requests']['all'].count" striped >
@@ -205,7 +205,7 @@
 
     <h3>Endpoints requests (time in millisecond)</h3>
     <div class="table-responsive" v-if="!updatingMetrics">
-      <table class="v-datatable v-table">
+      <table class="table table-striped">
         <thead>
         <tr>
           <th>Method</th>
@@ -216,7 +216,7 @@
         </thead>
         <tbody>
         <template v-for="(entry, entryKey) of metrics.endpointsRequests">
-          <tr v-for="(method, methodKey) of entry">
+          <tr v-for="(method, methodKey) of entry" :key="entryKey + '-' + methodKey">
             <td>{{methodKey}}</td>
             <td>{{entryKey}}</td>
             <td class="text-right">{{method.count}}</td>
@@ -228,8 +228,8 @@
     </div>
 
     <h3 v-text="$t('metrics.cache.title')">Cache statistics</h3>
-    <div class="table-responsive" v-if="!updatingMetrics">
-      <table class="v-datatable v-table">
+    <div class="table-responsive" v-if="!updatingMetrics && isObjectExisting(metrics, 'cache')">
+      <table class="table table-striped">
         <thead>
         <tr>
           <th v-text="$t('metrics.cache.cachename')">Cache name</th>
@@ -244,7 +244,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="(entry, key) of metrics.cache">
+        <tr v-for="(entry, key) of metrics.cache" :key="key">
           <td>{{key}}</td>
           <td class="text-right">{{entry['cache.gets.hit']}}</td>
           <td class="text-right">{{entry['cache.gets.miss']}}</td>
@@ -266,8 +266,8 @@
     </div>
 
     <h3 v-text="$t('metrics.datasource.title')">DataSource statistics (time in millisecond)</h3>
-    <div class="table-responsive" v-if="!updatingMetrics && false">
-      <table class="v-datatable v-table">
+    <div class="table-responsive" v-if="!updatingMetrics && isObjectExistingAndNotEmpty(metrics, 'databases')">
+      <table class="table table-striped">
         <thead>
         <tr>
           <th><span v-text="$t('metrics.datasource.usage')">Connection Pool Usage</span>
@@ -324,9 +324,10 @@
       </table>
     </div>
 
-    <v-dialog ref="metricsModal" size="lg" :value="showMetricsModal">
+    <b-modal ref="metricsModal" size="lg">
+      <h4 slot="modal-title" class="modal-title" id="showMetricsLabel" v-text="$t('metrics.jvm.threads.dump.title')">Threads dump</h4>
       <metrics-modal :thread-dump="threadData"></metrics-modal>
-    </v-dialog>
+    </b-modal>
   </div>
 </template>
 
