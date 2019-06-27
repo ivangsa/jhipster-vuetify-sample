@@ -1,21 +1,19 @@
 <template>
-  <div id="app">
-    <ribbon></ribbon>
-    <div id="app-header">
-      <jhi-navbar></jhi-navbar>
-    </div>
-    <div class="container-fluid">
-      <div class="card jh-card">
-        <router-view></router-view>
-      </div>
-      <b-modal id="login-page" hide-footer lazy>
-        <span slot="modal-title" id="login-title" v-text="$t('login.title')">Sign in</span>
+    <v-app id="inspire">
+        <ribbon></ribbon>
+        <jhi-navbar></jhi-navbar>
+        <v-content>
+            <v-container fluid>
+            <v-slide-y-transition mode="out-in">
+                <router-view></router-view>
+            </v-slide-y-transition>
+            </v-container>
+        </v-content>
+        <v-footer color="indigo" app>
+            <span class="white--text version">{{version}}</span> <span class="white--text">&copy; 2019</span>
+        </v-footer>
         <login-form></login-form>
-      </b-modal>
-
-      <jhi-footer></jhi-footer>
-    </div>
-  </div>
+    </v-app>
 </template>
 
 <script lang="ts" src="./app.component.ts">

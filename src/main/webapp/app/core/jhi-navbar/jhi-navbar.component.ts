@@ -12,11 +12,20 @@ export default class JhiNavbar extends Vue {
 
   @Inject('accountService') private accountService: () => AccountService;
   public version = VERSION ? 'v' + VERSION : '';
+  public isNavbarCollapsed = true;
   private currentLanguage = this.$store.getters.currentLanguage;
   private languages: any = this.$store.getters.languages;
 
   created() {
     this.translationService().refreshTranslation(this.currentLanguage);
+  }
+
+  public toogleDrawer(): void {
+    this.isNavbarCollapsed = !this.isNavbarCollapsed;
+  }
+
+  public collapseNavbar(): void {
+    this.isNavbarCollapsed = true;
   }
 
   public subIsActive(input) {

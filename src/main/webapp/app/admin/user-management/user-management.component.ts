@@ -16,7 +16,7 @@ export default class JhiUserManagementComponent extends Vue {
   public propOrder = 'id';
   public reverse = false;
   public totalItems = 0;
-  public removeId: number = null;
+  public removeId: string = null;
 
   public dismissCountDown: number = this.$store.getters.dismissCountDown;
   public dismissSecs: number = this.$store.getters.dismissSecs;
