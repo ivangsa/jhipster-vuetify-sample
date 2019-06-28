@@ -6,10 +6,10 @@ import AlertService from '@/shared/alert/alert.service';
 export default class JhiUserManagementComponent extends Vue {
   @Inject('alertService') private alertService: () => AlertService;
   @Inject('userService') private userManagementService: () => UserManagementService;
-  public error = '';
-  public success = '';
+  public error = false;
+  public success = false;
   public users: any[] = [];
-  public itemsPerPage = 20;
+  public itemsPerPage = 15;
   public queryCount: number = null;
   public page = 1;
   public previousPage: number = null;
@@ -44,13 +44,13 @@ export default class JhiUserManagementComponent extends Vue {
     this.userManagementService()
       .update(user)
       .then(() => {
-        this.error = null;
-        this.success = 'OK';
+        this.error = false;
+        this.success = true;
         this.loadAll();
       })
       .catch(() => {
-        this.success = null;
-        this.error = 'ERROR';
+        this.success = false;
+        this.error = true;
         user.activated = false;
       });
   }
@@ -67,6 +67,28 @@ export default class JhiUserManagementComponent extends Vue {
         this.totalItems = Number(res.headers['x-total-count']);
         this.queryCount = this.totalItems;
       });
+  }
+
+  public get pagination(): any {
+    const pagination = {
+      descending: this.reverse,
+      page: this.page,
+      itemsPerPage: this.itemsPerPage,
+      sortBy: this.propOrder,
+      totalItems: this.totalItems
+    };
+    return pagination;
+  }
+
+  public set pagination(pagination: any) {
+    if (this.itemsPerPage !== pagination.itemsPerPage) {
+      this.previousPage = null;
+    }
+    this.propOrder = pagination.sortBy;
+    this.reverse = pagination.descending;
+    this.itemsPerPage = pagination.itemsPerPage;
+    this.page = pagination.page;
+    this.loadPage(pagination.page);
   }
 
   public sort(): any {

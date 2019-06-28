@@ -2,6 +2,7 @@ import Vue from 'vue';
 import { Component, Inject } from 'vue-property-decorator';
 import { required, minLength, maxLength, helpers, email } from 'vuelidate/lib/validators';
 import LoginService from '@/account/login.service';
+import VuelidateVuetifyMixin from '@/shared/validation/vuelidate-vuetify.mixin';
 import RegisterService from '@/account/register/register.service';
 import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from '@/constants';
 
@@ -33,7 +34,8 @@ const validations: any = {
   }
 };
 @Component({
-  validations
+  validations,
+  mixins: [VuelidateVuetifyMixin]
 })
 export default class Register extends Vue {
   @Inject('registerService') private registerService: () => RegisterService;
@@ -44,15 +46,15 @@ export default class Register extends Vue {
     password: undefined
   };
   public confirmPassword: any = null;
-  public doNotMatch = '';
-  public error = '';
-  public errorEmailExists = '';
-  public errorUserExists = '';
+  public doNotMatch = false;
+  public error = false;
+  public errorEmailExists = false;
+  public errorUserExists = false;
   public success = false;
 
   public register(): void {
     if (this.registerAccount.password !== this.confirmPassword) {
-      this.doNotMatch = 'ERROR';
+      this.doNotMatch = true;
     } else {
       this.doNotMatch = null;
       this.error = null;
@@ -67,11 +69,11 @@ export default class Register extends Vue {
         .catch(error => {
           this.success = null;
           if (error.response.status === 400 && error.response.data.type === LOGIN_ALREADY_USED_TYPE) {
-            this.errorUserExists = 'ERROR';
+            this.errorUserExists = true;
           } else if (error.response.status === 400 && error.response.data.type === EMAIL_ALREADY_USED_TYPE) {
-            this.errorEmailExists = 'ERROR';
+            this.errorEmailExists = true;
           } else {
-            this.error = 'ERROR';
+            this.error = true;
           }
         });
     }

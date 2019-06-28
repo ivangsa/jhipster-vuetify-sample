@@ -1,4 +1,5 @@
 import { maxLength, minLength, required } from 'vuelidate/lib/validators';
+import VuelidateVuetifyMixin from '@/shared/validation/vuelidate-vuetify.mixin';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import Component from 'vue-class-component';
@@ -24,14 +25,15 @@ const validations = {
 
 @Component({
   validations,
+  mixins: [VuelidateVuetifyMixin],
   computed: {
     ...mapGetters(['account'])
   }
 })
 export default class ChangePassword extends Vue {
-  success: string = null;
-  error: string = null;
-  doNotMatch: string = null;
+  success = false;
+  error = false;
+  doNotMatch = false;
   resetPassword: any = {
     currentPassword: null,
     newPassword: null,
@@ -40,9 +42,9 @@ export default class ChangePassword extends Vue {
 
   public changePassword(): void {
     if (this.resetPassword.newPassword !== this.resetPassword.confirmPassword) {
-      this.error = null;
-      this.success = null;
-      this.doNotMatch = 'ERROR';
+      this.error = false;
+      this.success = false;
+      this.doNotMatch = true;
     } else {
       this.doNotMatch = null;
       axios
@@ -51,12 +53,12 @@ export default class ChangePassword extends Vue {
           newPassword: this.resetPassword.newPassword
         })
         .then(() => {
-          this.success = 'OK';
+          this.success = true;
           this.error = null;
         })
         .catch(() => {
           this.success = null;
-          this.error = 'ERROR';
+          this.error = true;
         });
     }
   }

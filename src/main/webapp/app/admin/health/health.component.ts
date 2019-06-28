@@ -47,7 +47,7 @@ export default class JhiHealth extends Vue {
 
   public showHealth(health: any): void {
     this.currentHealth = health;
-    (<any>this.$refs.healthModal).show();
+    //(<any>this.$refs.healthModal).show();
   }
 
   public subSystemName(name: string): string {

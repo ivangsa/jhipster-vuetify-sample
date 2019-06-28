@@ -1,4 +1,5 @@
 import { email, maxLength, minLength, required } from 'vuelidate/lib/validators';
+import VuelidateVuetifyMixin from '@/shared/validation/vuelidate-vuetify.mixin';
 import { Component, Inject, Vue } from 'vue-property-decorator';
 import UserManagementService from './user-management.service';
 import { IUser, User } from '@/shared/model/user.model';
@@ -35,7 +36,8 @@ const validations: any = {
 };
 
 @Component({
-  validations
+  validations,
+  mixins: [VuelidateVuetifyMixin]
 })
 export default class JhiUserManagementEdit extends Vue {
   @Inject('alertService') private alertService: () => AlertService;

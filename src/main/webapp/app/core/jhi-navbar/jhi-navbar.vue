@@ -18,10 +18,10 @@
       </v-list-item>
 
       <v-list-group :value="false" v-if="authenticated">
-        <v-list-item slot="activator">
+        <template v-slot:activator>
           <v-list-item-action><v-icon>view_list</v-icon></v-list-item-action>
           <v-list-item-title v-text="$t('global.menu.entities.main')">Entities</v-list-item-title>
-        </v-list-item>
+        </template>
 
         <v-list-item @click="$router.push({name: 'Post'})">
           <v-list-item-action><v-icon>navigate_next</v-icon></v-list-item-action>
@@ -34,19 +34,56 @@
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->        
       </v-list-group>
 
+      <v-list-group :value="false" v-if="hasAnyAuthority('ROLE_ADMIN')">
+        <template v-slot:activator>
+            <v-list-item-action><font-awesome-icon icon="user-plus" /></v-list-item-action>
+            <v-list-item-title v-text="$t('global.menu.admin.main')">Administration</v-list-item-title>
+        </template>
+
+        <v-list-item @click="$router.push({name: 'JhiUser'})">
+          <v-list-item-action><font-awesome-icon icon="user" /></v-list-item-action>
+          <v-list-item-title v-text="$t('global.menu.admin.userManagement')">User management</v-list-item-title>
+        </v-list-item>
+        <v-list-item @click="$router.push({name: 'JhiMetricsComponent'})">
+          <v-list-item-action><font-awesome-icon icon="tachometer-alt" /></v-list-item-action>
+          <v-list-item-title v-text="$t('global.menu.admin.metrics')">Metrics</v-list-item-title>
+        </v-list-item>
+        <v-list-item @click="$router.push({name: 'JhiHealthComponent'})">
+          <v-list-item-action><font-awesome-icon icon="heart" /></v-list-item-action>
+          <v-list-item-title v-text="$t('global.menu.admin.health')">Health</v-list-item-title>
+        </v-list-item>
+        <v-list-item @click="$router.push({name: 'JhiConfigurationComponent'})">
+          <v-list-item-action><font-awesome-icon icon="list" /></v-list-item-action>
+          <v-list-item-title v-text="$t('global.menu.admin.configuration')">Configuration</v-list-item-title>
+        </v-list-item>
+        <v-list-item @click="$router.push({name: 'JhiAuditsComponent'})">
+          <v-list-item-action><font-awesome-icon icon="bell" /></v-list-item-action>
+          <v-list-item-title v-text="$t('global.menu.admin.audits')">Audits</v-list-item-title>
+        </v-list-item>
+        <v-list-item @click="$router.push({name: 'JhiLogsComponent'})">
+          <v-list-item-action><font-awesome-icon icon="tasks" /></v-list-item-action>
+          <v-list-item-title v-text="$t('global.menu.admin.logs')">Logs</v-list-item-title>
+        </v-list-item>
+        <v-list-item v-if="swaggerEnabled" @click="$router.push({name: 'JhiDocsComponent'})">
+          <v-list-item-action><font-awesome-icon icon="book" /></v-list-item-action>
+          <v-list-item-title v-text="$t('global.menu.admin.apidocs')">API</v-list-item-title>
+        </v-list-item>
+      </v-list-group>
+
+
       <v-list-group
         :value="false"
         id="languagesnavBarDropdown"
         v-if="languages && Object.keys(languages).length > 1"
       >
-        <v-list-item slot="activator">
+        <template v-slot:activator>
           <v-list-item-action>
             <font-awesome-icon icon="flag"/>
           </v-list-item-action>
           <v-list-item-title>
             <span v-text="$t('global.menu.language')">Language</span>
           </v-list-item-title>
-        </v-list-item>
+        </template>
         <v-list-item
           v-for="(value, key) in languages"
           :key="`lang-${key}`"
@@ -61,14 +98,14 @@
       </v-list-group>
 
       <v-list-group :value="false" v-if="authenticated">
-        <v-list-item slot="activator">
+        <template v-slot:activator>
           <v-list-item-action>
             <v-icon>contacts</v-icon>
           </v-list-item-action>
           <v-list-item-title>
             <span v-text="$t('global.menu.account.main')">Account</span>
           </v-list-item-title>
-        </v-list-item>
+        </template>
 
         <v-list-item @click="$router.push('/account/settings')">
           <v-list-item-action>

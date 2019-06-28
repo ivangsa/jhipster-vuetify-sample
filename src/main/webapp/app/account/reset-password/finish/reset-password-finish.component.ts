@@ -25,9 +25,9 @@ export default class ResetPasswordFinish extends Vue {
   @Inject('loginService')
   private loginService: () => LoginService;
 
-  public doNotMatch: string = null;
-  public success: string = null;
-  public error: string = null;
+  public doNotMatch = false;
+  public success = false;
+  public error = false;
   public keyMissing: boolean = null;
   public key: any;
   public resetAccount: any = {
@@ -47,16 +47,16 @@ export default class ResetPasswordFinish extends Vue {
     this.success = null;
     this.error = null;
     if (this.resetAccount.newPassword !== this.resetAccount.confirmPassword) {
-      this.doNotMatch = 'ERROR';
+      this.doNotMatch = true;
     } else {
       axios
         .post('api/account/reset-password/finish', { key: this.key, newPassword: this.resetAccount.newPassword })
         .then(() => {
-          this.success = 'OK';
+          this.success = true;
         })
         .catch(() => {
           this.success = null;
-          this.error = 'ERROR';
+          this.error = true;
         });
     }
   }
